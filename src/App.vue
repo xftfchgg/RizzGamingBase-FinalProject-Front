@@ -1,5 +1,21 @@
 <script setup>
+import axios from 'axios';
 
+  axios.get('https://localhost:7048/api/Games/1')
+  .then(response => {
+    console.log(response.data);
+  })
+  .catch(error => {
+    console.log(error);
+  });
+
+  axios.get('https://localhost:7048/api/Comments/1')
+  .then(response => {
+    console.log(response.data);
+  })
+  .catch(error => {
+    console.log(error);
+  });
 </script>
 
 <template>
