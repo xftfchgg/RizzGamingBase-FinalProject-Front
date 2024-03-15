@@ -1,9 +1,43 @@
 <script setup>
 
+import axios from 'axios';
+import VueCookies from 'vue-cookies'
+
+const postData = {
+  account:"123",
+  password:"123",
+};
+var id = "CfDJ8KshjrWbZT1IhORnLUROfOWil0YgDOa5HHu40VyBeZ6KcCbRX0qfEfb-bFO8Se6sTyoVKejoA_s3GadZgXzD8jEINj9hc8KInS4YOswfxRmnNKt6vK4sgp7abfJGkHJ_Ng";
+
+axios.post('https://localhost:7048/api/Members/Login', postData)
+  .then(response => {
+  
+    if(response.data[0]=="登入成功"){
+      // 設置 'account' Cookie，過期時間為一小時後
+      id= response.data[1]
+      VueCookies.set('accountId', response.data[1], new Date(Date.now() + 3600000)); // 3600000 毫秒 = 1 小時
+      console.log(response.data[0]);
+
+    }
+    else{
+      console.log(response.data[0]);
+    }
+  })
+  .catch(error => {
+    console.log(error);
+  });
+
+axios.post(`https://localhost:7048/api/Members/MemberId?protectId=${id}`, id)
+  .then(response => {
+    console.log(response.data);
+  })
+  .catch(error => {
+    console.log(error);
+});
 </script>
 
 <template>
- 
+  
   <RouterView />
 </template>
 
